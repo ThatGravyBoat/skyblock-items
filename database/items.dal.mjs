@@ -32,7 +32,7 @@ export const addItem = (id, data) => {
                 .collection("items")
                 .insertOne({
                     ...data,
-                    id: id,
+                    internal_id: id,
                 })
         )
         .then(result => {
