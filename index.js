@@ -14,7 +14,11 @@ app.post("/add/:id", express.json(), (req, res) => {
 
 app.get("/items", (req, res) => {
     getItems().then((items) => {
-        res.status(200).json(items.map(item => item.internal_id));
+        const output = {
+            id: items.map(item => item.internal_id),
+            uuids: items.map(item => item.components["minecraft:custom_data"]?.uuid ?? null).filter(uuid => uuid !== null),
+        }
+        res.status(200).json(output);
     }).catch((e) => {
         console.error(e);
         res.sendStatus(500);
