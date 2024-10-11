@@ -14,7 +14,7 @@ app.post("/add/:id", express.json(), (req, res) => {
 
 app.get("/items", (req, res) => {
     getItems().then((items) => {
-        res.status(200).json(items);
+        res.status(200).json(items.map(item => item.id));
     }).catch((e) => {
         console.error(e);
         res.sendStatus(500);
