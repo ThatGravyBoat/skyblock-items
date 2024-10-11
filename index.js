@@ -25,6 +25,20 @@ app.get("/items", (req, res) => {
     });
 });
 
+app.get("/report", (req, res) => {
+    getItems().then((items) => {
+        const output = {}
+        items.forEach((item) => {
+            const count = output[item.internal_id] ?? 0;
+            output[item.internal_id] = count + 1;
+        });
+        res.status(200).json(output);
+    }).catch((e) => {
+        console.error(e);
+        res.sendStatus(500);
+    });
+});
+
 app.listen(process.env.SERVER_PORT, () => {
     console.log(`Server running on port ${process.env.SERVER_PORT}`);
 });
